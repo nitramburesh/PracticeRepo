@@ -5,10 +5,11 @@ function wordsToMarks(string){
     var value = 0;
     var letterNum = 0;
     
-    for (var letter of letterArr){
-    letterNum = alphabet.indexOf(letter) + 1;
-    value = letterNum + value;
-    }
+    letterArr.map((element) => {
+        letterNum = element.charCodeAt(0) - 96;
+        value += letterNum;
+      })
+      
     
      return value;
   }
