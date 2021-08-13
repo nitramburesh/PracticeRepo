@@ -1,13 +1,13 @@
 function wordsToMarks(string){
-  var word = string;
-  var letterArr = word.split("");
-  var value = 0;
-  var letterNum = 0;
-  
+  const word = string;
+  const letterArr = word.split("");
+  const value = 0;
+  const charOffset = 96;
+
   letterArr.map((element) => {
-    letterNum = element.charCodeAt(0) - 96;
+    const letterNum = 0;
+    letterNum = element.charCodeAt(0) - charOffset;
     value += letterNum;
   })
-  
   return value;
 }
