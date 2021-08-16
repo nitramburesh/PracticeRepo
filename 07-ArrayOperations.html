@@ -30,11 +30,11 @@
 
       const currentYear = new Date().getFullYear();
 
-      const atLeastOne = people.some(
+      const isOneOlder = people.some(
         (person) => currentYear - person.year > 19
       );
 
-      const allOfEm = people.every((person) => currentYear - person.year > 19);
+      const areAllOlder = people.every((person) => currentYear - person.year > 19);
 
       // Array.prototype.find()
       // Find is like filter, but instead returns just the one you are looking for
