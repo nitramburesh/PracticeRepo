@@ -60,7 +60,7 @@
         "An Old Dog",
       ];
 
-      const bandArray = [...bands].map((band) => band.toLowerCase());
+      const bandArray = [...bands];
 
       const regex = /^(the|an|a)\s/gi;
 
@@ -79,7 +79,6 @@
         listItem.innerText = item;
         list.appendChild(listItem);
       });
-
     </script>
   </body>
 </html>
