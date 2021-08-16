@@ -25,17 +25,17 @@
       const cities = [];
 
       fetch(endpoint)
-        .then((promise) => promise.json())
+        .then((fetched) => fetched.json())
         .then((data) => cities.push(...data));
 
       function findMatches(wordToMatch, cities) {
-        return cities.filter((place) => {
-          const regex = new RegExp(wordToMatch, "gi");
-          return place.city.match(regex) || place.state.match(regex);
-        });
+        const regex = new RegExp(wordToMatch, "gi");
+        return cities.filter(
+          (place) => place.city.match(regex) || place.state.match(regex)
+        );
       }
 
-      const searchInput = document.getElementById("input");
+      const input = document.getElementById("input");
       const suggestions = document.getElementById("suggestions");
 
       function displayMatches() {
@@ -43,17 +43,52 @@
 
         const mappedMatches = foundMatches
           .map((place) => {
-            return `<li>
-          <span> 
-            ${place.city}, ${place.state}
-          </span>
-          </li>`;
+            return `
+          <div>
+          <li>
+            ${place.state}, ${place.city}
+          </li>
+          </div>
+          `;
           })
           .join("");
         suggestions.innerHTML = mappedMatches;
       }
 
-      searchInput.addEventListener("input", displayMatches);
+      input.addEventListener("input", displayMatches);
+
+      // const cities = [];
+
+      // fetch(endpoint)
+      //   .then((promise) => promise.json())
+      //   .then((data) => cities.push(...data));
+
+      // function findMatches(wordToMatch, cities) {
+      //   return cities.filter((place) => {
+      //     const regex = new RegExp(wordToMatch, "gi");
+      //     return place.city.match(regex) || place.state.match(regex);
+      //   });
+      // }
+
+      // const searchInput = document.getElementById("input");
+      // const suggestions = document.getElementById("suggestions");
+
+      // function displayMatches() {
+      //   const foundMatches = findMatches(input.value, cities);
+
+      //   const mappedMatches = foundMatches
+      //     .map((place) => {
+      //       return `<li>
+      //     <span>
+      //       ${place.city}, ${place.state}
+      //     </span>
+      //     </li>`;
+      //     })
+      //     .join("");
+      //   suggestions.innerHTML = mappedMatches;
+      // }
+
+      // searchInput.addEventListener("input", displayMatches);
     </script>
   </body>
 </html>
