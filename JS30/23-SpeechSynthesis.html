@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Speech Synthesis</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Pacifico"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="voiceinator">
+      <h1>The Voiceinator 5000</h1>
+
+      <select name="voice" id="voices">
+        <option value="">Select A Voice</option>
+      </select>
+
+      <label for="rate">Rate:</label>
+      <input name="rate" type="range" min="0" max="3" value="1" step="0.1" />
+
+      <label for="pitch">Pitch:</label>
+
+      <input name="pitch" type="range" min="0" max="2" step="0.1" />
+      <textarea name="text">Hello! I love JavaScript 👍</textarea>
+      <button id="stop">Stop!</button>
+      <button id="speak">Speak</button>
+    </div>
+
+    <script>
+      const voices = [];
+      const synth = window.speechSynthesis;
+      const speakButton = document.querySelector("#speak");
+      const stopButton = document.querySelector("#stop");
+      const voicesDropdown = document.querySelector('[name="voice"]');
+
+      function populateVoiceList() {
+        voices.push(...synth.getVoices());
+        voices.forEach((voice) => {
+          let option = document.createElement("option");
+          option.textContent = `${voice.name} (${voice.lang})`;
+          option.setAttribute("data-lang", voice.lang);
+          option.setAttribute("data-name", voice.name);
+          document.getElementById("voices").appendChild(option);
+        });
+      }
+
+      function speak() {
+        let selectedVoice = voicesDropdown.selectedOptions[0].index - 1;
+        const inputText = document.querySelector('[name="text"]');
+        const rate = document.querySelector('[name="rate"]');
+        const pitch = document.querySelector('[name="pitch"]');
+        const message = new SpeechSynthesisUtterance(inputText.value);
+        message.voice = voices[selectedVoice];
+        message.pitch = pitch.value;
+        message.rate = rate.value;
+        synth.speak(message);
+      }
+      function stopSpeaking() {
+        synth.cancel();
+      }
+
+      populateVoiceList();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+      }
+      speakButton.addEventListener("click", speak);
+      stopButton.addEventListener("click", stopSpeaking);
+    </script>
+  </body>
+</html>
