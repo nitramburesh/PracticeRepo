@@ -93,34 +93,45 @@
     </div>
 
     <script>
-      const checkboxes = document.querySelectorAll(
-        '.inbox .item input[type="checkbox"]'
+      const checkboxes = Array.from(
+        document.querySelectorAll('.inbox .item input[type="checkbox"]')
       );
 
-      checkboxes.forEach((checkbox) =>
-        checkbox.addEventListener("click", handleClick)
-      );
       let firstChecked = 0;
 
       const swapIndexes = () => {
-        if (firstChecked > secondChecked)
+        if (firstChecked > secondChecked) {
           [firstChecked, secondChecked] = [secondChecked, firstChecked];
+        }
       };
 
       const checkAllBetween = () => {
-        for (let i = firstChecked+1; i < secondChecked; i++)
-          checkboxes[i].checked = !checkboxes[i].checked;
+        if (checkboxes[firstChecked].checked) {
+          for (let i = firstChecked; i < secondChecked; i++) {
+            checkboxes[i].checked = true;
+          }
+        }
+        if (
+          checkboxes[firstChecked].checked == false ||
+          checkboxes[secondChecked].checked == false
+        ) {
+          for (let i = firstChecked; i <= secondChecked; i++) {
+            checkboxes[i].checked = false;
+          }
+        }
       };
 
-      function handleClick(event) {
+      const handleClick = (event) => {
         if (event.shiftKey) {
-          secondChecked = [...checkboxes].indexOf(event.target);
+          secondChecked = checkboxes.indexOf(event.target);
           swapIndexes();
           checkAllBetween();
         }
-
-        firstChecked = [...checkboxes].indexOf(event.target);
-      }
+        firstChecked = checkboxes.indexOf(event.target);
+      };
+      checkboxes.forEach((checkbox) =>
+        checkbox.addEventListener("click", handleClick)
+      );
     </script>
   </body>
 </html>
