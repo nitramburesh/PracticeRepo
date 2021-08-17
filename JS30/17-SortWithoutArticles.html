@@ -74,11 +74,13 @@
 
       const list = document.getElementById("bands");
 
-      sortedBands.map((item) => {
+      sortedBands.forEach((item) => {
         let listItem = document.createElement("li");
         listItem.innerText = item;
         list.appendChild(listItem);
       });
+
+      
     </script>
   </body>
 </html>
